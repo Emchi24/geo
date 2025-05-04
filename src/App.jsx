@@ -24,32 +24,32 @@ const migrationData = {
     BG: { name: "Bulgarien", rate: "15.0-20.0%", color: emigrationRateColors['15.0-20.0%'] },
     P: { name: "Portugal", rate: "15.0-20.0%", color: emigrationRateColors['15.0-20.0%'] },
     // 10.0-14.9% (Orange)
-    LT: { name: "Litauen", rate: "10.0-14.9%", color: emigrationRateColors['10.0-14.9%'] }, // Corrected from image data (M1 visual)
-    LV: { name: "Lettland", rate: "10.0-14.9%", color: emigrationRateColors['10.0-14.9%'] }, // Corrected from image data (M1 visual)
+    LT: { name: "Litauen", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
+    LV: { name: "Lettland", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
     SK: { name: "Slowakei", rate: "10.0-14.9%", color: emigrationRateColors['10.0-14.9%'] },
     // 5.0-9.9% (Yellow)
     PL: { name: "Polen", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
     EST: { name: "Estland", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
     CY: { name: "Zypern", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
-    I: { name: "Italien", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] }, // Corrected based on M1 map
-    GR: { name: "Griechenland", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
     // 2.0-4.9% (Light Green)
+    I: { name: "Italien", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
     H: { name: "Ungarn", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
     SLO: { name: "Slowenien", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
+    GR: { name: "Griechenland", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
+    CZ: { name: "Tschechien", rate: "<2.0%", color: emigrationRateColors['<2.0%'] },
     M: { name: "Malta", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
-    B: { name: "Belgien", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
-    NL: { name: "Niederlande", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
-    A: { name: "Österreich", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
-    S: { name: "Schweden", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
-    FIN: { name: "Finnland", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
-    DK: { name: "Dänemark", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
     // <2.0% (Dark Green)
     D: { name: "Deutschland", rate: "<2.0%", color: emigrationRateColors['<2.0%'] },
     F: { name: "Frankreich", rate: "<2.0%", color: emigrationRateColors['<2.0%'] },
     E: { name: "Spanien", rate: "<2.0%", color: emigrationRateColors['<2.0%'] },
+    B: { name: "Belgien", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
+    NL: { name: "Niederlande", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
     IRL: { name: "Irland", rate: "<2.0%", color: emigrationRateColors['<2.0%'] },
-    L: { name: "Luxemburg", rate: "<2.0%", color: emigrationRateColors['<2.0%'] },
-    CZ: { name: "Tschechien", rate: "<2.0%", color: emigrationRateColors['<2.0%'] }, // Corrected based on M1 map
+    A: { name: "Österreich", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
+    S: { name: "Schweden", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
+    FIN: { name: "Finnland", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
+    DK: { name: "Dänemark", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
+    L: { name: "Luxemburg", rate: "<2.0%", color: emigrationRateColors['<2.0%'] }, // VERIFIED Dark Green on map
   },
 
   destinationCountries: [ // Source: M2 Table (Verified)
@@ -152,7 +152,6 @@ function PieChart({ data, colors = chartColorPalette }) {
   );
 }
 
-
 // Card for Key Insights
 function KeyInsightCard({ title, description, icon }) {
   return (
@@ -172,7 +171,7 @@ function DashboardTab() {
     const top5Destinations = migrationData.destinationCountries.slice(0, 5);
     const maxTop5Workers = top5Destinations.length > 0 ? Math.max(...top5Destinations.map(c => c.workers)) : 1;
     // Use the explicit total from the M2 table note
-    const totalWorkersFromTable = migrationData.destinationCountries.reduce((sum, c) => sum + c.workers, 0); // Or use 6.54 if explicitly given
+    const totalWorkersFromTable = 6.54;
 
   return (
     <div className="space-y-6">
@@ -184,8 +183,7 @@ function DashboardTab() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <KeyInsightCard
-            // Updated to show calculated total from M2 data or explicit 6.54
-            title={`${totalWorkersFromTable.toFixed(2)} Mio.`}
+            title={`${totalWorkersFromTable.toFixed(2)} Mio.`} // Use the total from M2 table
             description="EU-Bürger arbeiteten 2020 in einem anderen EU-Land (laut M2)"
             icon={<Briefcase size={24} />}
           />
@@ -196,7 +194,6 @@ function DashboardTab() {
           />
           <KeyInsightCard
             title="Hohe Abwanderung Ost/Südost"
-            // Updated M1 significant countries based on data
             description={`Signifikanter Anteil (>10%) der Erwerbstätigen aus RO, HR, BG, P, LT, LV, SK arbeitete 2020 im EU-Ausland (M1)`}
             icon={<ArrowUpRight size={24} />}
           />
@@ -204,7 +201,7 @@ function DashboardTab() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Bar Chart: Top 5 Destination Countries (This is not a Pie Chart) */}
+        {/* Bar Chart: Top 5 Destination Countries */}
         <div className="bg-white p-6 rounded-lg shadow-md border">
           <h3 className="text-lg font-bold mb-4">Top 5 Zielländer 2020 (Mio. EU-Arbeitskräfte)</h3>
           <div className="space-y-4">
@@ -230,13 +227,11 @@ function DashboardTab() {
            <p className="text-xs text-gray-500 mt-3">Quelle: M2 Tabelle (Stat. Bundesamt)</p>
         </div>
 
-        {/* Pie Chart: German Immigration Origin (This is the one that needed fixing) */}
+        {/* Pie Chart: German Immigration Origin */}
         <div className="bg-white p-6 rounded-lg shadow-md border">
           <h3 className="text-lg font-bold mb-4">Herkunft zugezogener EU-Bürger nach Deutschland (2020)</h3>
           <div className="flex flex-col sm:flex-row items-center justify-around space-y-4 sm:space-y-0 sm:space-x-4">
-            {/* Ensure container for PieChart is square */}
-            <div className="w-40 h-40 sm:w-48 sm:h-48 flex-shrink-0">
-              {/* Using the fixed PieChart component */}
+            <div className="w-40 h-40 flex-shrink-0">
               <PieChart data={migrationData.germanImmigrationByOrigin} colors={chartColorPalette}/>
             </div>
             <div className="text-sm">
@@ -268,10 +263,9 @@ function DashboardTab() {
           <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
             <h4 className="font-semibold text-blue-800">Wichtigste Erkenntnisse aus M1-M3:</h4>
             <ul className="list-disc pl-5 space-y-1 mt-2 text-sm">
-              {/* Updated M1 conclusions based on corrected data */}
-              <li>Osteuropäische/Baltische/Südosteuropäische Länder (RO, HR größer als 20%; BG, P 15-20%; LT, LV, SK 10-15%) hatten 2020 die höchsten relativen Abwanderungsraten.</li>
-              <li>Westeuropäische Länder (D, F, E, IRL, L, CZ keiner als 2%; I, H, SLO, M, B, NL, A, S, FIN, DK 2-4.9%) hatten niedrige relative Abwanderungsraten. Griechenland, Polen, Estland, Zypern waren im mittleren Bereich (5-9.9%).</li>
-              <li>Deutschland war das mit Abstand wichtigste Zielland für EU-Arbeitskräfte (absolute Zahlen, M2).</li>
+              <li>Osteuropäische/Baltische/Südosteuropäische Länder (RO, HR, BG, P, LT, LV, SK) hatten 2020 die höchsten relativen Abwanderungsraten (Anteil an eigener Erwerbsbevölkerung 20-64 J.).</li>
+              <li>Westeuropäische Länder (D, F, E, NL, L etc.) hatten niedrige relative Abwanderungsraten (5%).</li>
+              <li>Deutschland war das mit Abstand wichtigste Zielland für EU-Arbeitskräfte (absolute Zahlen).</li>
               <li>Die Hauptherkunftsländer für Zuwanderer nach Deutschland (RO, PL, BG, HR - M3) korrelieren stark mit den Ländern hoher Abwanderungsraten (M1), mit Ausnahme von Polen (mittlere Rate).</li>
               <li>Italien war ein signifikantes Herkunftsland für Deutschland (M3 - 6.7%), obwohl seine generelle Abwanderungsrate (M1) nur niedrig war (2.0-4.9%).</li>
             </ul>
@@ -337,15 +331,13 @@ function OriginCountriesTab() {
          <h3 className="text-lg font-bold mb-4">Interpretation der Abwanderungsraten (M1)</h3>
          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
              <div className="bg-gray-50 p-4 rounded border">
-                 <h4 className="font-semibold mb-2 text-gray-800">Hohe / Erhöhte Raten (größer als 10%)</h4>
-                 {/* Updated based on corrected data */}
-                 <p className="text-gray-600">Länder wie Rumänien, Kroatien (größer als 20%), Bulgarien, Portugal (15-20%), Litauen, Lettland, Slowakei (10-15%) zeigten 2020 die höchsten relativen Abwanderungsraten. Ein signifikanter Teil ihrer Erwerbsbevölkerung arbeitete im EU-Ausland.</p>
+                 <h4 className="font-semibold mb-2 text-gray-800">Hohe / Erhöhte Raten (mehr als 10%)</h4>
+                 <p className="text-gray-600">Länder wie Rumänien, Kroatien (mehr als 20%), Bulgarien, Portugal (15-20%), Litauen, Lettland, Slowakei (10-15%) zeigten 2020 die höchsten relativen Abwanderungsraten. Ein signifikanter Teil ihrer Erwerbsbevölkerung arbeitete im EU-Ausland.</p>
                  <p className="text-gray-600 mt-2">Mögliche Gründe (nicht in Daten): Wirtschaftliche Faktoren (Lohngefälle, Arbeitsmarktchancen), etablierte Migrationsnetzwerke.</p>
              </div>
              <div className="bg-gray-50 p-4 rounded border">
-                 <h4 className="font-semibold mb-2 text-gray-800">Niedrige / Sehr niedrige Raten (weniger als 5%)</h4>
-                 {/* Updated based on corrected data */}
-                 <p className="text-gray-600">Italien, Ungarn, Slowenien, Malta, Belgien, Niederlande, Österreich, Schweden, Finnland, Dänemark (2-4.9%) und insbesondere Deutschland, Frankreich, Spanien, Irland, Luxemburg, Tschechien (keiner als 2%) hatten geringe Raten. Polen, Griechenland, Estland, Zypern (5-9.9%) lagen im mittleren Bereich.</p>
+                 <h4 className="font-semibold mb-2 text-gray-800">Niedrige / Sehr niedrige Raten (mehr als 5%)</h4>
+                 <p className="text-gray-600">Italien, Ungarn, Slowenien, Griechenland, Tschechien, Malta (2-4.9%) und insbesondere Deutschland, Frankreich, Spanien, Benelux, Skandinavien, Österreich, Irland (weniger als 2%) hatten geringe Raten.</p>
                  <p className="text-gray-600 mt-2">Mögliche Gründe (nicht in Daten): Weniger wirtschaftlicher Anreiz zur Abwanderung, größere eigene Arbeitsmärkte, selbst wichtige Zielländer.</p>
              </div>
          </div>
@@ -394,9 +386,9 @@ function DestinationCountriesTab() {
           <h3 className="font-semibold text-blue-800 mb-2">Hinweise zu Zielländern (M2)</h3>
           <ul className="list-disc pl-5 space-y-1 text-gray-700">
             <li>Deutschland war 2020 mit 2,46 Mio. das mit Abstand wichtigste Zielland in dieser Auswahl.</li>
-            <li>Die Top 5 (D, E, I, F, A) nahmen zusammen 5,04 Mio. der erfassten EU-Arbeitsmigranten auf (ca. 77% der Summe der Top 10).</li> {/* Updated calculation */}
+            <li>Die Top 5 (D, E, I, F, A) nahmen zusammen 5,04 Mio. der 6,54 Mio. erfassten EU-Arbeitsmigranten auf (ca. 77%).</li>
             <li>Die Zahlen sind absolut. Im Verhältnis zur eigenen Bevölkerungsgröße haben kleinere Länder wie Luxemburg (0,13 Mio. auf ca. 0,6 Mio. Einwohner) oder Irland (0,20 Mio. auf ca. 5 Mio. Einwohner) eine hohe relative Bedeutung als Zielland.</li>
-            <li>Die Quelle (M2) listet explizit diese 10 Länder und eine Gesamtsumme von 6.54 Mio. auf.</li>
+            <li>Die Quelle (M2) listet explizit diese 10 Länder und eine Gesamtsumme auf.</li>
           </ul>
            <p className="text-xs text-gray-500 mt-3">Quelle: M2 Tabelle (Stat. Bundesamt)</p>
         </div>
@@ -420,9 +412,8 @@ function GermanyImmigrationTab() {
         </p>
 
         <div className="flex flex-col lg:flex-row items-center justify-around lg:space-x-8 space-y-6 lg:space-y-0">
-          {/* Pie Chart Container */}
-          {/* Ensure container for PieChart is square and large enough*/}
-          <div className="w-64 h-64 md:w-72 md:h-72 flex-shrink-0">
+          {/* Pie Chart */}
+          <div className="w-64 h-64 flex-shrink-0">
              {/* Pass sorted data to ensure consistent color mapping with legend */}
             <PieChart data={sortedGermanData} colors={chartColorPalette} />
           </div>
@@ -452,12 +443,11 @@ function GermanyImmigrationTab() {
         {/* Connection M1 and M3 */}
         <div className="mt-8 border-t pt-6">
             <h3 className="text-lg font-bold mb-3">Verbindung zur Abwanderung (M1 & M3)</h3>
-             {/* Updated based on corrected M1 data */}
             <p className="text-gray-700 text-sm">
-                Es besteht eine deutliche Korrelation: Die Länder mit den höchsten Anteilen an Zuwanderern nach Deutschland (M3: Rumänien 32.7%, Polen 17.2%, Bulgarien 11.7%, Kroatien 6.5%) gehören überwiegend auch zu den Ländern mit den höchsten relativen Abwanderungsraten ihrer Bevölkerung (M1: RO/HR mehr als 20%, BG 15-20%). Dies unterstreicht den starken Migrationsfluss von diesen Ländern nach Deutschland im Jahr 2020.
+                Es besteht eine deutliche Korrelation: Die Länder mit den höchsten Anteilen an Zuwanderern nach Deutschland (M3: Rumänien 32.7%, Polen 17.2%, Bulgarien 11.7%, Kroatien 6.5%) gehören überwiegend auch zu den Ländern mit den höchsten relativen Abwanderungsraten ihrer Bevölkerung (M1: RO/HR mehr als 20%, BG 15-20%, PL 5-10%). Dies unterstreicht den starken Migrationsfluss von diesen Ländern nach Deutschland im Jahr 2020.
             </p>
              <p className="text-gray-700 text-sm mt-2">
-                Interessant sind Polen und Italien: Polen ist das zweitwichtigste Herkunftsland für Deutschland (M3: 17.2%), obwohl seine Abwanderungsrate (M1: 5-9.9%) nur im mittleren Bereich liegt. Italien (M3: 6.7%) ist ebenfalls relevant, obwohl seine allgemeine Rate (M1: 2.0-4.9%) niedrig ist. Dies deutet auf spezifische Faktoren (z.B. historische Verbindungen, spezifische Arbeitsmärkte) für die Migration aus diesen Ländern nach Deutschland hin.
+                Interessant ist Italien: Mit 6.7% (M3) ein relevantes Herkunftsland für Deutschland, obwohl seine allgemeine Abwanderungsrate (M1) mit 2.0-4.9% eher niedrig ist. Dies deutet auf spezifische Faktoren für die Migration von Italienern nach Deutschland hin, die über die allgemeine nationale Abwanderungsneigung hinausgehen.
             </p>
         </div>
       </div>
@@ -492,9 +482,6 @@ export default function EUMigrationDashboard() {
     }`;
   };
 
-   // Determine header height for sticky nav offset (adjust if needed)
-   const headerHeightPx = 68; // Approx height based on p-4 sm:p-4 and text size
-
   return (
     <div className="min-h-screen bg-gray-100 text-gray-800 font-sans">
       {/* Header */}
@@ -510,8 +497,8 @@ export default function EUMigrationDashboard() {
       </header>
 
       {/* Navigation Tabs */}
-       {/* Adjusted top value based on header height */}
-      <nav className="bg-white shadow-sm sticky z-10" style={{ top: `${headerHeightPx -1}px` }}> {/* Adjusted top positioning */}
+       {/* Adjusted top value and added z-index */}
+      <nav className="bg-white shadow-sm sticky top-[52px] sm:top-[68px] z-10"> {/* Adjust based on actual header height */}
          {/* Enable horizontal scrolling for tabs on small screens */}
         <div className="container mx-auto flex overflow-x-auto">
           <button onClick={() => setActiveTab('dashboard')} className={getTabClassName('dashboard')}>
