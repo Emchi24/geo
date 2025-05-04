@@ -30,7 +30,7 @@ const migrationData = {
     // 5.0-9.9% (Yellow)
     PL: { name: "Polen", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
     EST: { name: "Estland", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
-    CY: { name: "Zypern", rate: "5.0-9.9%", color: emigrationRateColors['5.0-9.9%'] },
+    CY: { name: "Zypern", rate: "2.0-4.9", color: emigrationRateColors['2.0-4.9'] },
     // 2.0-4.9% (Light Green)
     I: { name: "Italien", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
     H: { name: "Ungarn", rate: "2.0-4.9%", color: emigrationRateColors['2.0-4.9%'] },
